@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="./node_modules/echarts/dist/echarts.min.js"></script>
+    <script src="node_modules/handsontable/dist/handsontable.full.min.js"></script>
+    <link href="node_modules/handsontable/dist/handsontable.full.min.css" rel="stylesheet" media="screen">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="example" style="width: 600px;height:350px"></div>
+    <div id="box" style="width: 600px;height:400px"></div>
+</body>
+<script>
+    var data = [
+  
+  ['Java', 1, '降', "-0.01%",],
+  ['C', 2, "升", '+2.44%'],
+  ['Python', 3, '升', '+1.41%'],
+  ['C++', 4, '降', '-2.58%'],
+  ['C#', 5, '升', '+2.07%'],
+  ['Visual Basic.NET', 6, '降', '-1.17%'],
+  ['JavaScript', 7, '降', '-0.85%']
+];
+
+var container = document.getElementById('example');
+var hot = new Handsontable(container, {
+    data: data,
+    className:'htCenter htMiddle',
+    colHeaders: ['语言名称','排名','升或降','变化幅度'],
+    filters: true,
+    licenseKey: 'non-commercial-and-evaluation',
+    rowHeights: 30,
+    colWidths: 140,
+});
+
+</script>
+<script>
+    var myChart=echarts.init(document.getElementById("box"));
+    //指定图表的配置项和数据
+    var option={
+        //标题
+        title:{
+          text:'JavaScript语言排名变化'
+        },
+        
+        //保存图片
+        toolbox:{
+            show:true,
+            feature:{
+                saveAsImage:{
+                    show:true
+                }
+            }
+        },
+        tooltip : {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross',
+              label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+          },
+        //图例-每一条数据的名字叫销量
+        legend:{
+            data:['排名']
+        },
+        //x轴
+        xAxis:{
+            data:["2000","2005","2010","2015","2020"]
+        },
+        //y轴没有显式设置，根据值自动生成y轴
+        yAxis:{},
+        //数据-data是最终要显示的数据
+        series:[{
+            name:'排名',
+            type:'line',
+            data:[6,9,8,8,7]
+        }]
+    };
+    //使用刚刚指定的配置项和数据项显示图表
+    myChart.setOption(option);
+</script>
+
+</html>
